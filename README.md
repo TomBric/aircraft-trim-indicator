@@ -23,7 +23,8 @@ The trim indicator has 3 wires to connect it:
 ### Internal connections when building the instrument
 1. Connect Power and Ground to the step-down converter. If not preset, set the converter to an update of 5 volts.
 2. Connect output +5V from the converter to VSYS (Pin #38) on the pico. Connect output - to GND (PIN#37) on the pico
-3. Connect the 1.54 epaper display 
+3. Connect the 1.54 epaper display
+
 | Display  | Cable color from display | Pi Pico pin name | Pico pin# |
 |:-----------:|:------------------:|:-----------:|:-------:|
 | VCC	 | grey		| 3,3V		| 36 |
@@ -34,6 +35,7 @@ The trim indicator has 3 wires to connect it:
 | DC	| green	|	GP7	|		10 |
 | RST | white	|	GP9	|		12 |
 | Busy | magenta	| GP12	|	16 |
+
 4. Connect the trim indicator: Use two resistors 10 kOhms and 1500 Ohms as voltage divider: Connect 10kOhms to the input line, then this output to the ADC0 input GP26_A0 at the Pico. From there connect resistor and ADC input via 1000 Ohms to GND (this voltage divider makes sure that your analog input line does not get more than 3.3 volts even if your trim sensor would supply full power voltage)
 
 ## Installation
