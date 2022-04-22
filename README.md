@@ -3,6 +3,7 @@ Trim indicator to display trim settings of aircraft. Based on Pi Pico with an 1.
 
 Can be used as replacement for older trim indicators, e.g. from MAC or others. Investment should be around 25 Euros in total.
 
+
 ## Required Hardware
 - Rasperry Pi Pico microcontroller (approx. 5 Euros), e.g. [welectron](https://www.welectron.com/Raspberry-Pi-Pico)
 - Waveshare 1.54 epaper module v2 (waveshare Waveshare 12955, 16 Euros), e.g. [welectron](https://www.welectron.com/Waveshare-12955-154inch-e-Paper-Module)
