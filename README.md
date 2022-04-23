@@ -52,7 +52,7 @@ By using the switch you can configure your trim display after installation in yo
 4. The last indication will be full down trim. Move your trim again and short push the button
 
 Configuration is now finished and the indicator should display your current trim optically as well as with a number from -100 to +100.
-If desired you can repeat the configuration. Pushing the button long (>1 sec) during the configuration will cancel the configuration procedure.
+If desired you can repeat the configuration.
 
 Thats all, have fun and give me some feedback or a coffee, if you are having fun ....
 

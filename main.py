@@ -53,12 +53,14 @@ trim_default = {'full_up': 64000, 'neutral': 32000, 'full_down': 1000}
 trim_settings = {}
 new_trim = {}
 display_wakeup = DISPLAY_WAKEUP
+led_onboard = Pin(25, Pin.OUT)
 
 
 async def display_driver():
     global trim_value
     global user_status
     global display_wakeup
+    global led_onboard
 
     old_value = 0
     print('Display driver running.')
@@ -82,12 +84,14 @@ async def display_driver():
                 display_percent = 100
             elif display_percent < -100:
                 display_percent = -100
-            print('Percentage {:2d}'.format(display_percent))
+            # print('Percentage {:2d}'.format(display_percent))
             if display_percent != old_value or display_wakeup > 0:
+                led_onboard.off()   # do some flicker
                 old_value = display_percent
                 display_wakeup -= 1
                 d.indicator(display_percent, user_status)
                 d.print()
+                led_onboard.on()
             else:
                 await uasyncio.sleep_ms(50)
         elif user_status == 2:   # setup trim full up
@@ -117,8 +121,6 @@ def pin_press():
         user_status = 1
     elif user_status == 1:
         user_status = 2
-    elif user_status > 2:   # during setup, long pressure = abort
-        user_status = 0
 
 
 def pin_press_short():
@@ -136,7 +138,7 @@ def pin_press_short():
     elif user_status == 3:   # neutral
         user_status = 4
         new_trim['neutral'] = trim_value
-    elif user_status == 4:    # value for neutral trim
+    elif user_status == 4:    # trim down
         user_status = 0
         new_trim['full_down'] = trim_value
         # set new trim values, do a sanity check, that neutral is between the two values
@@ -151,7 +153,11 @@ def pin_press_short():
 async def user_interface():
     global user_status
     global start
+    global led_onboard
     print('User interface running.')
+
+    led_onboard.on()
+
     while True:
         await uasyncio.sleep_ms(100)
         if user_status == 1:   # first long press for setup
