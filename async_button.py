@@ -38,19 +38,19 @@ class Pushbutton:
         loop = asyncio.get_event_loop()
         loop.create_task(self.buttoncheck())  # Thread runs forever
 
-    def press_func(self, func, args=()):
+    def press_func(self, func, args=()):   # is called whenever a button is pressed, also in the long press case
         self._tf = func
         self._ta = args
 
-    def release_func(self, func, args=()):
+    def release_func(self, func, args=()):  # is called whenever a button is released
         self._ff = func
         self._fa = args
 
-    def double_func(self, func, args=()):
+    def double_func(self, func, args=()):    # is called after two times pressing (but press also before)
         self._df = func
         self._da = args
 
-    def long_func(self, func, args=()):
+    def long_func(self, func, args=()):    # is called after a long time pressing, but press it called before also
         self._lf = func
         self._la = args
 
