@@ -183,8 +183,8 @@ async def main():
     trim_settings['full_up'] = configuration.get('full_up', trim_default['full_up'])
     trim_settings['neutral'] = configuration.get('neutral', trim_default['neutral'])
     trim_settings['full_down'] = configuration.get('full_down', trim_default['full_down'])
-
     print('Trim settings: {:s}'.format(json.dumps(trim_settings)))
+
     tasks = [uasyncio.create_task(display_driver()),
              uasyncio.create_task(user_interface()),
              uasyncio.create_task(sensor_reader())]
