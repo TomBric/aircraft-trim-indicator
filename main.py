@@ -113,7 +113,7 @@ def pin_press():
     global start
     global display_wakeup
 
-    print('Long pin pressed')
+    # print('Long pin pressed')
     display_wakeup = 1
 
     if user_status == 0:
@@ -130,7 +130,7 @@ def pin_press_short():
     global new_trim
     global display_wakeup
 
-    print('Short pin pressed')
+    # print('Short pin pressed')
     display_wakeup = 1
     if user_status == 2:     # highest trim up
         user_status = 3
