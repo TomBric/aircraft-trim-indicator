@@ -202,5 +202,5 @@ async def main():
 
 
 if __name__ == "__main__":
-    print('Main: Starting async threads')
+    print('Trim Indicator starting ...')
     uasyncio.run(main())
