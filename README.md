@@ -44,10 +44,11 @@ The trim indicator has 3 wires to connect it:
 3. Copy all files to your pc and "Run flash xxx" them to your Pico. At the last step flash main.py and the microcontroller will start.
 
 ## Configuration
-By using the switch you can configure your trim display after installation in your aircraft. This has to be once. The configuration will be stored.
+By using the switch you can configure your trim display after installation in your aircraft. This has to be done once. 
+The configuration will be stored.
 
 1. Do a long push (more than one second) at the button. Within another 10 secondes do a long push again (this is to protect from accidentally changing the configuration)
-2. After on push there will be a black rectangle in the left corner. After the second push the indicator will show the "full down" position. Please move your trim to the full down position and push (shortly) the button once.
+2. After one push there will be a black rectangle in the left corner. After the second push the indicator will show the "full down" position. Please move your trim to the full down position and push (shortly) the button once.
 3. The next indication will be neutral trim. Move your trim neutral and short push the button again.
 4. The last indication will be full down trim. Move your trim again and short push the button
 
