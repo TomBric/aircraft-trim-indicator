@@ -41,14 +41,18 @@ import config
 import json
 
 
-SET_TIME_MS = const(10000)   # time for two subsequent long presses before going into setup mode
-DISPLAY_WAKEUP = const(50)   # number of refreshs after start, to get better contrast on the display
+SET_TIME_MS = const(10000)      # time for two subsequent long presses before going into setup mode
+DISPLAY_WAKEUP = const(50)      # number of refreshs after start, to get better contrast on the display
+DIVIDER_R1 = 10000               # resistance in Ohms of R1 resistor connected to main power
+DIVIDER_R2 = 1000                # resistance in Ohms of R2 resistor of voltage divider
+VOLTAGE_FACTOR = 3.3 / 65536
 
 # GLOBALS
 start = time.ticks_ms()
 user_status = 0
 trim_value = 0
-trim_default = {'full_up': 64000, 'neutral': 32000, 'full_down': 1000}
+main_power = 0   # power voltage of aircraft
+trim_default = {'full_up': -100, 'neutral': 0, 'full_down': 100}
 # settings for trim, initialized during setup (highest up, neutral, highest down)
 trim_settings = {}
 new_trim = {}
@@ -89,7 +93,7 @@ async def display_driver():
                 led_onboard.off()   # do some flicker
                 old_value = display_percent
                 display_wakeup -= 1
-                d.indicator(display_percent, user_status)
+                d.indicator(display_percent, main_power, user_status)
                 d.print()
                 led_onboard.on()
             else:
@@ -168,12 +172,20 @@ async def user_interface():
 
 async def sensor_reader():
     global trim_value
-    adc = ADC(Pin(26))  # create ADC object on ADC pin
+    global main_power
+
+    adc_trim = ADC(Pin(26))  # create ADC object on ADC pin
+    adc_power = ADC(Pin(27))
     print('Sensor reader running.')
     while True:
-        trim_value = adc.read_u16()  # read value, 0-65535 across voltage range 0.0v - 3.3v
-        # print('Value {:2d}'.format(trim_value))
+        v_trim = adc_trim.read_u16() * VOLTAGE_FACTOR    # read value, 0-65535 across voltage range 0.0v - 3.3v
+        v_power = adc_power.read_u16() * VOLTAGE_FACTOR  # value for power
+        trim_value = round((v_power - v_trim) * 200 / v_power) - 100 # calculates the trim position from -100% to 100%
+        main_power = v_power * (DIVIDER_R1 + DIVIDER_R2) / DIVIDER_R2
+        print('v_trim {:2f} v_power {:2f} Trim-Value {:2d} main_pwer {:2f}'.format(v_trim, v_power, trim_value,
+                                                                                   main_power))
         await uasyncio.sleep_ms(100)
+
 
 
 async def main():

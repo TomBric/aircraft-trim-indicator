@@ -53,6 +53,7 @@ white = 1
 nums = ((1,3,4,5,6,7),(6,7), (1,6,2,5,3), (1,6,2,7,3), (4,6,2,7), (1,4,2,7,3), (1,4,2,7,5,3),
 		(1,6,7), (1,2,3,4,5,6,7), (1,4,6,2,7,3))
 
+
 # Default assignment: sck=Pin(10), mosi=Pin(11), miso=Pin(8)
 class Display:
 	def __init__(self):
@@ -78,31 +79,47 @@ class Display:
 	def busy(self):
 		return self.e.busy()
 
-	def seven_seg(self, x, y, size, thick, number):
-		for led in nums[number]:
-			if led == 1:
-				self.fb.fill_rect(x, y, size+thick, thick, black)
-			elif led == 2:
-				self.fb.fill_rect(x, y+size, size+thick, thick, black)
-			elif led == 3:
-				self.fb.fill_rect(x, y+2*size, size+thick, thick, black)
-			elif led == 4:
-				self.fb.fill_rect(x, y, thick, size+thick, black)
-			elif led == 5:
-				self.fb.fill_rect(x, y+size, thick, size+thick, black)
-			elif led == 6:
-				self.fb.fill_rect(x+size, y, thick, size+thick, black)
-			elif led == 7:
-				self.fb.fill_rect(x+size, y+size, thick, size+thick, black)
+	def seven_seg_char(self, x, y, size, thick, character):
+		if character == '+':
+			self.fb.fill_rect(x, y + size//2 - thick//2, size//2, thick, black)   # "-" part
+			self.fb.fill_rect(x + size//4 - thick//2, y + size//4, thick, size//2, black)  # "|" part
+		elif character == '-':
+			self.fb.fill_rect(x, y + size // 2 - thick // 2, size // 2, thick, black)
+		elif character == '.':
+			self.fb.fill_rect(x + size//4 - thick//2, y + size - thick//2, thick, thick, black)
+		elif '0' <= character <= '9':
+			number = ord(character) - ord('0')
+			for led in nums[number]:
+				if led == 1:
+					self.fb.fill_rect(x, y, size//2+thick, thick, black)
+				elif led == 2:
+					self.fb.fill_rect(x, y+size//2, size//2+thick, thick, black)
+				elif led == 3:
+					self.fb.fill_rect(x, y+2*size//2, size//2+thick, thick, black)
+				elif led == 4:
+					self.fb.fill_rect(x, y, thick, size//2+thick, black)
+				elif led == 5:
+					self.fb.fill_rect(x, y+size//2, thick, size//2+thick, black)
+				elif led == 6:
+					self.fb.fill_rect(x+size//2, y, thick, size//2+thick, black)
+				elif led == 7:
+					self.fb.fill_rect(x+size//2, y+size//2, thick, size//2+thick, black)
 
+	def seven_seg_number(self, x, y, size, format_string, number):   # print an int value as seven segments
+		# example seven_seg_float(10,30, 10,'{:+2.1}', 12.7)
+		s = format_string.format(number)
+		xpos = x
+		for c in s:
+			self.seven_seg_char(xpos, y, size, size//8, c)
+			xpos += size//2 + size//4
 
-	def indicator(self, percentage, setupmode = 0):
+	def indicator(self, percentage, power, setupmode=0):
 		# self.fb.fill_rect(0, 0, self.e.width, self.e.height, white)
 		self.fb.fill(white)
 		s = 4  # size of out frame
 		sb = 16  # size of indicator
-		size = 16  # size of numbers
-		thick = 4  # thickness of numbers
+		size_perc = 32  # size of numbers
+		size_volt = 16
 
 		self.fb.fill_rect(100, 0, self.e.width-1-100, self.e.height-1, black)
 		self.fb.fill_rect(100+s, s, self.e.width-1-100-2*s, self.e.height-1-2*s, white)
@@ -111,22 +128,8 @@ class Display:
 		if setupmode == 0 or setupmode == 1:
 			position = math.floor((self.e.height-2*s-sb) / 200 * percentage) + 100
 			self.fb.fill_rect(100+4*s, position-sb//2, 100-8*s, sb, black)
-			posy = 100 + s
-			if percentage > 0:  # plus sign
-				self.fb.fill_rect(0, posy-thick//2, size, thick, black)
-				self.fb.fill_rect(0+size//2-thick//2, posy-size//2, thick, size, black)
-			elif percentage < 0: # minus sign
-				self.fb.fill_rect(0, posy - thick // 2, size, thick, black)
-				percentage = - percentage   # for the right calculations below
-			posy = posy - size - thick
-			h = percentage // 100
-			if h > 0:
-				self.seven_seg(20, posy, size, thick, h)
-			t = (percentage % 100) // 10
-			if h > 0 or t > 0:
-				self.seven_seg(45, posy, size, thick, t)
-			self.seven_seg(70, posy, size, thick, percentage % 10)
-
+			self.seven_seg_number(5, 100+s-size_perc//2, size_perc,'{:+3d}', percentage)
+			self.seven_seg_number(5, 5, size_volt, '{:+2.1f}', power)
 		if setupmode >= 1:    # indicate setup mode
 			self.fb.fill_rect(5, 0, 15, 15, black)   # black indication left upper corner
 			if setupmode == 2:

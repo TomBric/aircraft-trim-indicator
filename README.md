@@ -36,7 +36,16 @@ The trim indicator has 3 wires to connect it:
 | RST | white	|	GP9	|		12 |
 | Busy | magenta	| GP12	|	16 |
 
-4. Connect the trim indicator: Use two resistors 10 kOhms and 1500 Ohms as voltage divider: Connect 10kOhms to the input line, then this output to the ADC0 input GP26_A0 at the Pico. From there connect resistor and ADC input via 1000 Ohms to GND (this voltage divider makes sure that your analog input line does not get more than 3.3 volts even if your trim sensor would supply full power voltage)
+4. Connect the trim indicator: Use two resistors 10 kOhms and 1500 Ohms as voltage divider: 
+Connect 10kOhms to the input line, then this output to the ADC0 input GP26_A0 at the Pico. 
+From there connect resistor and ADC input via 1000 Ohms to GND (this voltage divider makes sure that your analog input 
+line does not get more than 3.3 volts even if your trim sensor would supply full power voltage)
+5. Connect the reference voltage: Since the aircraft voltage may vary (12-14 V DC typically) we need to know this to
+reliably measure the trim potentiometer. So use as well two resistors 10 kOhms and 1500 Ohms. Connect Connect 10kOhms 
+to the aircraft voltage (+12 to +14V), then this output to the ADC1 input GP26_A1 at the Pico. From there connect 
+resistor and ADC1 input via 1000 Ohms to GND.
+The aircraft main voltage will also be displayed in the upper left corner. If you change the resistor values, 
+please also modify the constants in the program.
 
 ## Installation
 1. Connect the pi pico via micro usb to your PC
