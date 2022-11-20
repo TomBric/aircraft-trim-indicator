@@ -3,6 +3,9 @@ Trim indicator to display trim settings of aircraft. Based on Pi Pico with an 1.
 
 Can be used as replacement for older trim indicators, e.g. from MAC or others. Investment should be around 25 Euros in total.
 
+|  |  |  |
+| --- | --- | --- |
+| ![0](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/0.jpg) | ![-22](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/-22.jpg) | ![-100](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/-100.jpg) |
 
 
 ## Required Hardware
@@ -65,6 +68,9 @@ Configuration is now finished and the indicator should display your current trim
 If desired you can repeat the configuration.
 
 Thats all, have fun and give me some feedback or a coffee, if you are having fun ....
+
+## Wiring Diagram
+![Wiring](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/TrimDisplay.jpg)
 
 ## 3D Printed Cases
 ... to follow. I am working on OpenScad 3D print files to print your instrument. It will fit into a 2 1/4 inch instrument hole.
