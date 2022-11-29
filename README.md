@@ -76,7 +76,7 @@ If desired you can repeat the configuration.
 Thats all, have fun and give me some feedback or a coffee, if you are having fun ....
 
 ## Wiring Diagram
-![Wiring](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/TrimDisplay.jpg)
+![Wiring](https://github.com/TomBric/aircraft-trim-indicator/blob/main/.github/TrimDisplayWithRudder.jpg)
 
 ## 3D Printed Cases
 ... to follow. I am working on OpenScad 3D print files to print your instrument. It will fit into a 2 1/4 inch instrument hole.
