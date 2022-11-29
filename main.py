@@ -46,7 +46,7 @@ DISPLAY_WAKEUP = const(50)      # number of refreshs after start, to get better 
 DIVIDER_R1 = 10000               # resistance in Ohms of R1 resistor connected to main power
 DIVIDER_R2 = 1000                # resistance in Ohms of R2 resistor of voltage divider
 VOLTAGE_FACTOR = 3.3 / 65536
-RUDDER_TRIM = True              # True if also rudder trim is desired
+RUDDER_TRIM = False              # True if also rudder trim is desired
 
 # GLOBALS
 start = time.ticks_ms()
