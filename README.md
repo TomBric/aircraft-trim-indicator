@@ -48,17 +48,18 @@ line does not get more than 3.3 volts even if your trim sensor would supply full
 Connect elevator trim to GP26_A0 and rudder trim to GP28_A2.
 
 5. Connect the reference voltage: Since the aircraft voltage may vary (12-14 V DC typically) we need to know this to
-reliably measure the trim potentiometer. So use as well two resistors 10 kOhms and 1000 Ohms. Connect Connect 10kOhms 
+reliably measure the trim potentiometer. So use as well two resistors 10 kOhms and 1000 Ohms. Connect 10kOhms 
 to the aircraft voltage (+5 to +28V), then this output to the ADC1 input GP27_A1 at the Pico. From there connect 
 resistor and ADC1 input via 1000 Ohms to GND.
-The aircraft main voltage will also be displayed in the upper left corner. If you change the resistor values, 
+The aircraft main voltage will also be displayed as well. If you change the resistor values, 
 please also modify the constants in the program.
 
 ## Installation
 1. Connect the pi pico via micro usb to your PC
-2. Install pyCharm and install pi pico extension to be ready to push python files on the Pico, see here for an setup guide (https://themachineshop.uk/getting-started-with-the-pi-pico-and-pycharm/)
-3. If you also want to use elevator trim: Set RUDDER_TRIM = True in line 49 in main.py. 
-3. Copy all files to your pc and "Run flash xxx" for all files to your Pico. At the last step flash main.py and the microcontroller will start.
+2. Install pyCharm and install pi pico extension to be ready to push python files on the Pico, see here for a 
+[setup guide](https://themachineshop.uk/getting-started-with-the-pi-pico-and-pycharm/)
+3. If you also want to use rudder trim: Set RUDDER_TRIM = True in line 49 in main.py. 
+3. Copy AOO .py files to your pc and "Run flash xxx" for all files to your Pico. At the last step flash main.py and the microcontroller will start.
 
 ## Configuration
 By using the switch you can configure your trim display after installation in your aircraft. This has to be done once. 
